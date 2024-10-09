@@ -1,5 +1,5 @@
 import type { Preview, ReactRenderer } from "@storybook/react";
-import { withThemeByDataAttribute } from "@storybook/addon-themes";
+import '../src/main.scss'
 
 const preview: Preview = {
   parameters: {
@@ -11,14 +11,6 @@ const preview: Preview = {
     },
   },
   decorators: [
-    withThemeByDataAttribute<ReactRenderer>({
-      themes: {
-        light: "",
-        dark: "dark",
-      },
-      defaultTheme: "light",
-      attributeName: "data-mode",
-    }),
   ],
 };
 

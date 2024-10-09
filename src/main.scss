@@ -1,0 +1,34 @@
+@import 'variables.scss';
+ 
+:root {
+  font-family: $font-family;
+  line-height: 1.5;
+  font-weight: 400;
+ 
+  color-scheme: $color-scheme;
+  color: $text;
+  background-color: $body;
+ 
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+ 
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+  &:hover {
+    color: $active;
+  }
+}
+ 
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}

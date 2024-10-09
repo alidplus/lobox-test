@@ -16,22 +16,10 @@ const config: StorybookConfig = {
     "../src/**/*.stories.@(ts|tsx)",
   ],
   addons: [
-    getAbsolutePath("@storybook/addon-themes"),
     getAbsolutePath("@storybook/addon-onboarding"),
     getAbsolutePath("@storybook/addon-links"),
     getAbsolutePath("@storybook/addon-essentials"),
     getAbsolutePath("@storybook/addon-interactions"),
-    {
-      name: "@storybook/addon-postcss",
-      options: {
-        postcssLoaderOptions: {
-          postcssOptions: {
-            plugins: [require.resolve("tailwindcss")],
-          },
-          implementation: import("postcss"),
-        },
-      },
-    },
   ],
   framework: {
     name: getAbsolutePath("@storybook/react-vite"),
