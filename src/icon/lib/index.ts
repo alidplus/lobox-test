@@ -1,0 +1,8 @@
+export { default as ball } from './ball'
+export { default as check } from './check'
+export { default as chevronDown } from './chevron-down'
+export { default as game } from './game'
+export { default as graduate } from './graduate'
+export { default as hospital } from './hospital'
+export { default as science } from './science'
+export { default as theater } from './theater'

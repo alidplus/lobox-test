@@ -1,0 +1,78 @@
+import { Meta } from "@storybook/blocks";
+import Card from "../card";
+import BallIcon from "../icon/lib/ball";
+import CheckIcon from "../icon/lib/check";
+import ChevronDownIcon from "../icon/lib/chevron-down";
+import GameIcon from "../icon/lib/game";
+import GraduateIcon from "../icon/lib/graduate";
+import HospitalIcon from "../icon/lib/hospital";
+import ScienceIcon from "../icon/lib/science";
+import TheaterIcon from "../icon/lib/theater";
+
+<Meta title="Icons Pallete" />
+
+<div className="flex">
+  <Card>
+    <div className="flex col">
+      <BallIcon />
+      <strong>BallIcon</strong>
+    </div>
+  </Card>
+  <Card>
+    <div className="flex col">
+      <CheckIcon />
+      <strong>CheckIcon</strong>
+    </div>
+  </Card>
+  <Card>
+    <div className="flex col">
+      <ChevronDownIcon />
+      <strong>ChevronDownIcon</strong>
+    </div>
+  </Card>
+  <Card>
+    <div className="flex col">
+      <GameIcon />
+      <strong>GameIcon</strong>
+    </div>
+  </Card>
+  <Card>
+    <div className="flex col">
+      <GraduateIcon />
+      <strong>GraduateIcon</strong>
+    </div>
+  </Card>
+  <Card>
+    <div className="flex col">
+      <HospitalIcon />
+      <strong>HospitalIcon</strong>
+    </div>
+  </Card>
+  <Card>
+    <div className="flex col">
+      <ScienceIcon />
+      <strong>ScienceIcon</strong>
+    </div>
+  </Card>
+  <Card>
+    <div className="flex col">
+      <TheaterIcon />
+      <strong>TheaterIcon</strong>
+    </div>
+  </Card>
+</div>
+
+<style>
+{`
+  .flex {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    color: #444
+  }
+  .flex.col {
+    flex-direction: column;
+    align-items: center
+  }
+`}
+</style>
