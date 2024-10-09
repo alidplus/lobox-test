@@ -1,0 +1,47 @@
+@import '../variables.scss';
+
+.input {
+  border: $b-size solid $border;
+  box-sizing: border-box;
+  border-radius: $radius-lg;
+  background-color: $white;
+  width: 100%;
+  padding: $space-lg;
+
+  &:focus,
+  &:focus-visible {
+    border: $b-size-2 solid $active;
+    outline: $b-size-4 solid $active-light;
+  }
+  &.disabled {
+    color: $inactive
+  }
+  &.has-addon-right {
+    padding-right: 50px
+  }
+  &.has-addon-left {
+    padding-left: 50px
+  }
+}
+
+.input-control {
+  position: relative;
+  .addon {
+    position: absolute;
+    height: 100%;
+    padding: 0 $space;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  &.has-addon-right {
+    .addon-right {
+      right: 0
+    }
+  }
+  &.has-addon-left {
+    .addon-left {
+      left: 0
+    }
+  }
+}

@@ -7,6 +7,7 @@ $body: #fafafa;
 $white: #fff;
 $black:#000;
 $text: #9196a2;
+$inactive: #888;
 $border: #ececec;
 $shadow: #ececec;
 $active: #8595c6;
@@ -14,8 +15,12 @@ $active-light: #d7defb;
 $link: #646cff;
 
 // scalars
-$radius: 15px;
+$radius-sm: 5px;
+$radius: 10px;
+$radius-lg: 15px;
 $b-size: 1px;
+$b-size-2: 2px;
+$b-size-4: 4px;
 
 // spaces
 $space: 10px;

@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import * as ICONS from './lib';
 import { IconProps } from "./types";
 
-type IconNames = keyof typeof ICONS
+export type IconNames = keyof typeof ICONS
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface CardProps {
