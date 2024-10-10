@@ -1,24 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react";
 
-import { ComponentProps } from "react";
 import Icon, { IconNames } from "../icon";
-import List, { LItemBase } from "./index";
-
-type CustomListProps = ComponentProps<typeof List> & { itemCount: number };
+import { LItemBase } from "../list";
+import Select from "./index";
+import { action } from '@storybook/addon-actions';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-  title: "Example/List",
-  component: List,
-  render({ itemCount, ...props }) {
-    return (
-      <List {...props}>
-        {new Array(itemCount).fill(0).map((_, i) => (
-          <List.Item key={i}>Item {i + 1}</List.Item>
-        ))}
-      </List>
-    )
-  },
+  title: "Example/Select",
+  component: Select,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: "centered",
@@ -27,15 +17,22 @@ const meta = {
   tags: ["autodocs"],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
-    itemCount: { type: 'number', options: [1, 5, 10, 20, 50, 100], control: "select", description: 'icon name' },
-    hoverable: { type: 'boolean' }
+    disabled: { type: 'boolean' }
   },
   // Use `fn` to spy on the onClick arg, which will appear in the actions panel once invoked: https://storybook.js.org/docs/essentials/actions#action-args
   args: {
-    itemCount: 1,
-    hoverable: true
+    disabled: false,
+    onChange: action('on-click'),
+    options: [
+      { key: 'k1', label: 'Education' },
+      { key: 'k2', label: 'Yeeeeh, science!' },
+      { key: 'k3', label: 'Art' },
+      { key: 'k4', label: 'Sport' },
+      { key: 'k5', label: 'Game' },
+      { key: 'k6', label: 'Health' },
+    ],
   },
-} satisfies Meta<CustomListProps>;
+} satisfies Meta<typeof Select>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -46,52 +43,22 @@ export const Default: Story = {
   },
 };
 
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Items: Story = {
-  args: {
-    items: [
-      { key: 'k1', label: 'Education' },
-      { key: 'k2', label: 'Yeeeeh, science!' },
-      { key: 'k3', label: 'Art' },
-      { key: 'k4', label: 'Sport' },
-      { key: 'k5', label: 'Game' },
-      { key: 'k6', label: 'Health' },
-    ]
-  },
-};
-
-// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const Renderer: Story = {
-  args: {
-    items: [
-      { key: 'k1', label: 'Education' },
-      { key: 'k2', label: 'Yeeeeh, science!' },
-      { key: 'k3', label: 'Art' },
-      { key: 'k4', label: 'Sport' },
-      { key: 'k5', label: 'Game' },
-      { key: 'k6', label: 'Health' },
-    ],
-    render(item) {
-      return `item ${item.key}: ${item.label}`
-    }
-  },
-};
-
 interface CustomItem extends LItemBase {
   icon: IconNames
 }
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
-export const CustomItems: StoryObj<{ component: typeof List<CustomItem> }> = {
+export const CustomItems: StoryObj<{ component: typeof Select<CustomItem> }> = {
   args: {
-    items: [
+    options: [
       { key: 'k1', label: 'Education', icon: 'graduate' },
       { key: 'k2', label: 'Yeeeeh, science!', icon: 'science' },
-      { key: 'k3', label: 'Art', icon: 'theater', selected: true },
+      { key: 'k3', label: 'Art', icon: 'theater' },
       { key: 'k4', label: 'Sport', icon: 'ball' },
       { key: 'k5', label: 'Game', icon: 'game' },
       { key: 'k6', label: 'Health', icon: 'hospital' },
     ] satisfies CustomItem[],
+    value: 'k3',
     render(item: CustomItem) {
       return (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -100,7 +67,7 @@ export const CustomItems: StoryObj<{ component: typeof List<CustomItem> }> = {
             <Icon name={item.icon} width={24} height={24} />
           </div>
           {item.selected ? (
-            <Icon name="check" />
+            <Icon name="check" width={24} height={24} />
           ) : null}
         </div>
       )

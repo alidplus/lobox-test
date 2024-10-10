@@ -18,9 +18,9 @@ export default defineConfig({
       external: [
         "react",
         "react-dom",
-        "tailwind-variants",
-        "react/jsx-runtime",
-        "tailwindcss",
+        "react-popper",
+        "@popperjs/core",
+        "react/jsx-runtime"
       ],
     },
   },

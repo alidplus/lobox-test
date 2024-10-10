@@ -8,6 +8,7 @@
   width: 100%;
   padding: $space-lg;
 
+  &.focused,
   &:focus,
   &:focus-visible {
     border: $b-size-2 solid $active;

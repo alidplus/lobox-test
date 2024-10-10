@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from "react";
+import { forwardRef, InputHTMLAttributes } from "react";
 import { tv, VariantProps } from "tailwind-variants";
 import Icon, { IconNames } from "../icon";
 import "./style.scss";
@@ -10,6 +10,9 @@ const input = tv({
     disabled: {
       true: 'disabled'
     },
+    focused: {
+      true: 'focused'
+    },
     hasAddonRight: {
       true: 'has-addon-right'
     },
@@ -19,6 +22,7 @@ const input = tv({
   },
   defaultVariants: {
     disabled: false,
+    focused: false,
     hasAddonRight: false,
     hasAddonLeft: false,
   },
@@ -44,19 +48,17 @@ const inputControl = tv({
 type InputVariantProps = VariantProps<typeof input>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   iconRight?: IconNames
   iconLeft?: IconNames
   controlClassName?: string
 }
 
-export default function Input(
-  props: InputProps & InputVariantProps,
-) {
-  const { className, controlClassName, iconLeft, iconRight, ...restProps } = props;
+const Input = forwardRef<HTMLInputElement, InputProps & InputVariantProps>((props, ref) => {
+  const { className, controlClassName, iconLeft, iconRight, focused, ...restProps } = props;
   const { disabled } = restProps;
   const hasAddonLeft = !!iconLeft, hasAddonRight = !!iconRight
-  const inpCls = input({ disabled, hasAddonLeft, hasAddonRight, className });
+  const inpCls = input({ disabled, hasAddonLeft, hasAddonRight, focused, className });
   const ctrlCls = inputControl({ hasAddonLeft, hasAddonRight, className: controlClassName });
   return (
     <div className={ctrlCls}>
@@ -70,7 +72,9 @@ export default function Input(
           <Icon width={24} height={24} name={iconRight}/>
         </div>
       )}
-      <input className={inpCls} {...restProps} />
+      <input ref={ref} className={inpCls} {...restProps} />
     </div>
   );
-}
+})
+
+export default Input 

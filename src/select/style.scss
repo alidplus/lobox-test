@@ -1,0 +1,18 @@
+@import '../variables.scss';
+
+.select {
+}
+
+.select-menu-portal {
+  margin-top: $space;
+  overflow: hidden;
+  height: max-content;
+  &:focus,
+  &:focus-visible {
+    border: none;
+    outline: none;
+  }
+  .pop-menu {
+    width: var(--button-width)
+  }
+}

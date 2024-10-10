@@ -1,4 +1,4 @@
-import { Children, HTMLAttributes, isValidElement, PropsWithChildren, ReactNode } from "react";
+import { Children, HTMLAttributes, isValidElement, MouseEvent, PropsWithChildren, ReactNode } from "react";
 import { tv, VariantProps } from "tailwind-variants";
 import ListItem from "./item";
 import "./style.scss";
@@ -20,27 +20,31 @@ const list = tv({
 
 type ListVariantProps = VariantProps<typeof list>;
 
-export interface LItemBase {
+export type LItemBase = {
   key: string
-  label?: ReactNode
+  label?: string
   selected?: boolean
+} & {
+  [k: string]: any
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface ListProps<T extends LItemBase> extends HTMLAttributes<HTMLUListElement> {
+export interface ListProps<T extends LItemBase> extends Omit<HTMLAttributes<HTMLUListElement>, 'onSelect'> {
   items?: T[],
   render?: (item: T) => ReactNode
+  onSelect?: (item: T) => void
 }
 
-export default function List<T extends LItemBase>(
-  props: PropsWithChildren<ListProps<T> & ListVariantProps>,
-) {
-  const { className, hoverable, ...restProps } = props;
+function List<T extends LItemBase>(props: PropsWithChildren<ListProps<T> & ListVariantProps>) {
+  const { className, hoverable, onSelect, render, ...restProps } = props;
   const cls = list({ className, hoverable });
+
   return (
     <ul className={cls} {...restProps}>
       {props.items?.map(item => (
-        <ListItem key={item.key} selected={item.selected}>{props.render?.(item) ?? item.label ?? item.key}</ListItem>
+        <ListItem key={item.key} selected={item.selected} onClick={(event) => onSelect?.(item)}>
+          {render?.(item) ?? item.label ?? item.key}
+        </ListItem>
       )) ?? Children.map(props.children, (child) => {
         if (isValidElement(child) && typeof child.type !== 'string' && 'isValidListItem' in child.type) {
           return child
@@ -51,3 +55,5 @@ export default function List<T extends LItemBase>(
 }
 
 List.Item = ListItem
+
+export default List
