@@ -1,7 +1,7 @@
-import { InputHTMLAttributes, PropsWithChildren } from "react";
+import { InputHTMLAttributes } from "react";
 import { tv, VariantProps } from "tailwind-variants";
-import "./style.scss";
 import Icon, { IconNames } from "../icon";
+import "./style.scss";
 
 const input = tv({
   base: "input",

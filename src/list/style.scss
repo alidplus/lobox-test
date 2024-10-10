@@ -1,0 +1,31 @@
+@import '../variables.scss';
+.list {
+  margin: 0;
+  list-style: none;
+
+  .list-item {
+    padding: $space $space-lg;
+    border-radius: $radius;
+    font-weight: 600;
+    margin-top: $space-sm;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &.is-selected {
+      background-color: $active-light;
+      color: $active;
+    }
+
+  }
+  &.hoverable {
+    .list-item {
+      cursor: pointer;
+    }
+    .list-item:hover {
+      background-color: $active-light;
+      color: $active;
+    }
+  }
+}
