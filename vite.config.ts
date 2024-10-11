@@ -10,7 +10,6 @@ export default defineConfig({
     copyPublicDir: false,
     lib: {
       entry: path.resolve(__dirname, "src/main.ts"),
-      name: "GOLDEN UI KIT",
       formats: ["es", "umd", "cjs"],
       fileName: "main",
     },
@@ -18,8 +17,6 @@ export default defineConfig({
       external: [
         "react",
         "react-dom",
-        "react-popper",
-        "@popperjs/core",
         "react/jsx-runtime"
       ],
     },
