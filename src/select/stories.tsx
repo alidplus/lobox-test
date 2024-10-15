@@ -74,3 +74,32 @@ export const CustomItems: StoryObj<{ component: typeof Select<CustomItem> }> = {
     }
   },
 };
+
+// More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
+export const CustomItemsAndMultiSelect: StoryObj<{ component: typeof Select<CustomItem> }> = {
+  args: {
+    options: [
+      { key: 'k1', label: 'Education', icon: 'graduate' },
+      { key: 'k2', label: 'Yeeeeh, science!', icon: 'science' },
+      { key: 'k3', label: 'Art', icon: 'theater' },
+      { key: 'k4', label: 'Sport', icon: 'ball' },
+      { key: 'k5', label: 'Game', icon: 'game' },
+      { key: 'k6', label: 'Health', icon: 'hospital' },
+    ] satisfies CustomItem[],
+    value: ['k3'],
+    multi: true,
+    render(item: CustomItem) {
+      return (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
+            <span>{item.label}</span>
+            <Icon name={item.icon} width={24} height={24} />
+          </div>
+          {item.selected ? (
+            <Icon name="check" width={24} height={24} />
+          ) : null}
+        </div>
+      )
+    }
+  },
+};

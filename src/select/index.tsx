@@ -22,11 +22,23 @@ const select = tv({
 type SelectVariantProps = VariantProps<typeof select>;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface SelectProps<T extends LItemBase> extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'> {
+interface SingleSelectProps<T extends LItemBase> extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value'> {
   options?: T[],
   render?: (item: T) => ReactNode
-  onChange?: (item: T) => void
+  value?: string,
+  multi?: false
+  onChange?: (item: string) => void,
 }
+
+interface MultiSelectProps<T extends LItemBase> extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value'> {
+  options?: T[],
+  render?: (item: T) => ReactNode
+  onChange?: (item: string[]) => void,
+  value?: string[],
+  multi: true
+}
+
+type SelectProps<T extends LItemBase> = SingleSelectProps<T> | MultiSelectProps<T>
 
 // function render(item: LItemBase) {
 //   return (
@@ -42,6 +54,18 @@ interface SelectProps<T extends LItemBase> extends Omit<InputHTMLAttributes<HTML
 //   )
 // }
 
+function isMultiSelectProps<T extends LItemBase>(props: SelectProps<T>): props is MultiSelectProps<T> {
+  return 'multi' in props && props.multi === true
+}
+
+function toggleIteminArray(value: string, array: string[]): string[] {
+  if(array.includes(value)) {
+    return array.filter(item => item !== value)
+  } else {
+    return [...array, value]
+  }
+}
+
 export default function Select<T extends LItemBase>(
   props: SelectProps<T> & SelectVariantProps,
 ) {
@@ -51,7 +75,26 @@ export default function Select<T extends LItemBase>(
 
   const inputRef = useRef<HTMLButtonElement | null>(null)
 
-  const selectedOption = useMemo(() => options.find(op => op.key === value), [options, value])
+  const selectedKeys = value ? Array.isArray(value) ? value : [value] : []
+
+  const selectedLabels = selectedKeys.reduce<string[]>((acc, k) => {
+    const item = options.find(({ key }) => k === key)
+    if (item) {
+      const label = item?.label ?? item?.key
+      return [...acc, label]
+    }
+    return acc
+  }, [])
+
+  function handleChange (item: T) {
+    if (isMultiSelectProps(props)) {
+      const nextValue = Array.isArray(props.value) ? [...props.value] : []
+      props.onChange?.(toggleIteminArray(item.key, nextValue))
+    } else {
+      props.onChange?.(item.key)
+    }
+    close()
+  }
 
   return (
     <Menu as={'div'} className={cls}>
@@ -64,7 +107,7 @@ export default function Select<T extends LItemBase>(
             iconRight='chevronDown'
             readOnly
             focused={open}
-            value={selectedOption?.label ?? value}
+            value={selectedLabels.join(' - ')}
           />
           {open && (
             <MenuItems static anchor="bottom" className="select-menu-portal">
@@ -73,10 +116,7 @@ export default function Select<T extends LItemBase>(
                   hoverable
                   items={options}
                   render={render}
-                  onSelect={item => {
-                    onChange?.(item)
-                    close()
-                  }}
+                  onSelect={handleChange}
                 />
               </Card>
             </MenuItems>
